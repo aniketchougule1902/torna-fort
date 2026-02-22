@@ -817,6 +817,7 @@ h1, h2, h3 {
   opacity: 0.4;
   animation: statPulse 3s ease-in-out infinite;
   z-index: 0;
+  display:none;
 }
 
 .stat-item > * {
@@ -2280,3 +2281,4 @@ h1, h2, h3 {
     padding: 2rem 1rem;
   }
 }
+

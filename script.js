@@ -1,6 +1,6 @@
 // script.js - Enhanced Award-Winning Version
 
-// ===== ADVANCED PARTICLE SYSTEM =====
+// ===== PARTICLE SYSTEM - MOBILE OPTIMIZED =====
 class ParticleSystem {
   constructor(canvasId, options = {}) {
     this.canvas = document.getElementById(canvasId);
@@ -8,13 +8,17 @@ class ParticleSystem {
     
     this.ctx = this.canvas.getContext('2d');
     this.particles = [];
+    
+    // Detect mobile and reduce particles
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    
     this.options = {
-      particleCount: options.particleCount || 80,
+      particleCount: isMobileDevice ? 30 : options.particleCount || 80,
       particleColor: options.particleColor || '255, 153, 51',
-      particleSize: options.particleSize || 3,
-      speed: options.speed || 0.5,
-      connectDistance: options.connectDistance || 150,
-      mouseDistance: options.mouseDistance || 200,
+      particleSize: isMobileDevice ? 2 : options.particleSize || 3,
+      speed: isMobileDevice ? 0.3 : options.speed || 0.5,
+      connectDistance: isMobileDevice ? 80 : options.connectDistance || 150,
+      mouseDistance: isMobileDevice ? 100 : options.mouseDistance || 200,
       ...options
     };
     
@@ -24,13 +28,28 @@ class ParticleSystem {
     this.animate();
     
     window.addEventListener('resize', () => this.resize());
-    this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-    this.canvas.addEventListener('mouseleave', () => this.handleMouseLeave());
+    
+    // Touch support for mobile
+    this.canvas.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: true });
+    this.canvas.addEventListener('touchstart', (e) => this.handleTouchMove(e), { passive: true });
+    this.canvas.addEventListener('touchend', () => this.handleTouchEnd());
   }
   
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+  }
+  
+  handleTouchMove(e) {
+    if (e.touches.length > 0) {
+      this.mouse.x = e.touches[0].clientX;
+      this.mouse.y = e.touches[0].clientY;
+    }
+  }
+  
+  handleTouchEnd() {
+    this.mouse.x = null;
+    this.mouse.y = null;
   }
   
   handleMouseMove(e) {
@@ -223,13 +242,20 @@ window.addEventListener('load', function() {
 // ===== INIT PARTICLE SYSTEMS =====
 let particleSystems = [];
 function initParticleSystems() {
+  // Check for mobile device
+  const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+  
+  // Reduced particles on mobile for better performance
+  const particleCount = isMobileDevice ? 30 : 100;
+  const particleSize = isMobileDevice ? 2 : 2;
+  
   // Main particle canvas
   particleSystems.push(new ParticleSystem('particleCanvas', {
-    particleCount: 100,
+    particleCount: particleCount,
     particleColor: '212, 175, 55',
-    particleSize: 2,
-    speed: 0.8,
-    connectDistance: 120
+    particleSize: particleSize,
+    speed: 0.6,
+    connectDistance: isMobileDevice ? 80 : 100
   }));
 }
 
@@ -238,23 +264,43 @@ const navbar = document.getElementById('navbar');
 const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.getElementById('nav-menu');
 
+// Enhanced mobile detection
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
 navToggle.addEventListener('click', () => {
   navMenu.classList.toggle('active');
+  // Prevent body scroll when menu is open
+  document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
 });
+
+// Touch event for nav toggle
+navToggle.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  navMenu.classList.toggle('active');
+  document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+}, { passive: false });
 
 document.querySelectorAll('.nav-list a').forEach(link => {
   link.addEventListener('click', () => {
     navMenu.classList.remove('active');
+    document.body.style.overflow = '';
   });
 });
 
+// Navbar scroll effect - debounced for performance
+let lastScroll = 0;
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
+  const currentScroll = window.scrollY;
+  
+  // Only update class when crossing threshold
+  if (currentScroll > 50 && !navbar.classList.contains('scrolled')) {
     navbar.classList.add('scrolled');
-  } else {
+  } else if (currentScroll <= 50 && navbar.classList.contains('scrolled')) {
     navbar.classList.remove('scrolled');
   }
-});
+  
+  lastScroll = currentScroll;
+}, { passive: true });
 
 // ===== SCROLL-TRIGGERED ANIMATIONS (INTERSECTION OBSERVER) =====
 const animatedElements = document.querySelectorAll('.animate-on-scroll');
@@ -298,11 +344,13 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// ===== 3D TILT EFFECT FOR CARDS =====
+// ===== 3D TILT EFFECT FOR CARDS - MOBILE ENHANCED =====
 function initTiltEffect() {
   const cards = document.querySelectorAll('.contrib-card, .flip-card');
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   
   cards.forEach(card => {
+    // Mouse events (desktop)
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -321,10 +369,23 @@ function initTiltEffect() {
       card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
       card.style.transition = 'transform 0.4s ease';
     });
+    
+    // Touch events for mobile - tap to flip
+    if (isTouchDevice) {
+      card.addEventListener('touchstart', (e) => {
+        card.classList.add('touched');
+      }, { passive: true });
+      
+      card.addEventListener('touchend', (e) => {
+        setTimeout(() => {
+          card.classList.remove('touched');
+        }, 1500);
+      });
+    }
   });
 }
 
-// ===== LIGHTBOX GALLERY =====
+// ===== LIGHTBOX GALLERY - MOBILE ENHANCED =====
 const galleryItems = document.querySelectorAll('.gallery-item');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -335,6 +396,7 @@ const nextBtn = document.querySelector('.next');
 let currentIndex = 0;
 const imageSources = [];
 
+// Build image sources array
 galleryItems.forEach((item, index) => {
   const src = item.dataset.src;
   if (src) imageSources.push(src);
@@ -344,7 +406,15 @@ galleryItems.forEach((item, index) => {
     imageSources.push(url);
   }
   
+  // Click/touch event
   item.addEventListener('click', () => {
+    currentIndex = index;
+    openLightbox(imageSources[currentIndex]);
+  });
+  
+  // Touch support for mobile
+  item.addEventListener('touchend', (e) => {
+    e.preventDefault();
     currentIndex = index;
     openLightbox(imageSources[currentIndex]);
   });
@@ -354,11 +424,22 @@ function openLightbox(src) {
   lightboxImg.src = src;
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
 }
 
-closeBtn.addEventListener('click', () => {
+function closeLightbox() {
   lightbox.classList.remove('active');
   document.body.style.overflow = '';
+  document.body.style.position = '';
+}
+
+closeBtn.addEventListener('click', closeLightbox);
+
+// Close on background click
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    closeLightbox();
+  }
 });
 
 prevBtn.addEventListener('click', () => {
@@ -371,15 +452,41 @@ nextBtn.addEventListener('click', () => {
   lightboxImg.src = imageSources[currentIndex];
 });
 
+// Keyboard and touch navigation
 document.addEventListener('keydown', (e) => {
   if (!lightbox.classList.contains('active')) return;
-  if (e.key === 'Escape') {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
+  if (e.key === 'Escape') closeLightbox();
   if (e.key === 'ArrowLeft') prevBtn.click();
   if (e.key === 'ArrowRight') nextBtn.click();
 });
+
+// Swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+lightbox.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  const diff = touchStartX - touchEndX;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swipe left - next image
+      nextBtn.click();
+    } else {
+      // Swipe right - previous image
+      prevBtn.click();
+    }
+  }
+}
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -471,6 +578,9 @@ function initHoverSounds() {
 
 // ===== CURSOR TRAIL EFFECT =====
 function initCursorTrail() {
+  // Disable cursor trail on mobile for better performance
+  if (isMobile || window.innerWidth < 768) return;
+  
   const trail = [];
   const trailLength = 20;
   

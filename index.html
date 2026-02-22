@@ -10,8 +10,56 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Additional critical CSS for enhanced effects */
+    .particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .vfx-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+    }
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
+      animation: orbFloat 20s infinite ease-in-out;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(50px, -30px) scale(1.1); }
+      50% { transform: translate(-30px, 50px) scale(0.9); }
+      75% { transform: translate(-50px, -20px) scale(1.05); }
+    }
+  </style>
 </head>
 <body>
+  <!-- GLOWING ORBS BACKGROUND -->
+  <div class="glow-orb" style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,179,71,0.3) 0%, transparent 70%); top: 10%; left: 5%; animation-delay: 0s;"></div>
+  <div class="glow-orb" style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(161,61,47,0.3) 0%, transparent 70%); top: 60%; right: 10%; animation-delay: -7s;"></div>
+  <div class="glow-orb" style="width: 350px; height: 350px; background: radial-gradient(circle, rgba(255,158,0,0.2) 0%, transparent 70%); top: 40%; left: 60%; animation-delay: -14s;"></div>
+
+  <!-- VFX OVERLAY -->
+  <div class="vfx-overlay"></div>
+
+  <!-- PARTICLE CANVAS -->
+  <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
   <!-- PRELOADER (cinematic intro) -->
   <div id="preloader">
     <div class="preloader-content">
@@ -19,7 +67,9 @@
       <h1 class="preloader-title">शिवदुर्ग</h1>
       <p class="preloader-sub">Team 9 · Torna Fort</p>
       <div class="preloader-line"></div>
+      <div class="preloader-particles" id="preloaderParticles"></div>
     </div>
+    <div class="preloader-vignette"></div>
   </div>
 
   <!-- NAVBAR (fixed, responsive) -->
@@ -42,6 +92,7 @@
       <div class="nav-toggle" id="nav-toggle">
         <i class="fas fa-bars"></i>
       </div>
+      <div class="nav-particles" id="navParticles"></div>
     </div>
   </header>
 
@@ -50,23 +101,47 @@
     <!-- 1. CINEMATIC HERO SECTION -->
     <section id="hero" class="hero-section">
       <div class="hero-overlay"></div>
+      <div class="hero-particles" id="heroParticles"></div>
       <div class="hero-content">
         <div class="hero-text">
           <div class="hero-saffron-line"></div>
           <h1 class="hero-title animate-fadein">TORNA FORT</h1>
           <h2 class="hero-subtitle">Prachandagad – The Pride of the Maratha Empire</h2>
           <div class="hero-team">Shivadurga | Team No. 9</div>
-          <a href="#about" class="hero-btn">Enter the fortress <i class="fas fa-arrow-right"></i></a>
+          <div class="hero-buttons">
+            <a href="#about" class="hero-btn">Enter the fortress <i class="fas fa-arrow-right"></i></a>
+            <a href="#video" class="hero-btn hero-btn-secondary"><i class="fas fa-play"></i> Watch Video</a>
+          </div>
         </div>
         <br><br>
         <div class="scroll-down">
           <a href="#about"><i class="fas fa-chevron-down"></i></a>
+          <div class="scroll-line"></div>
         </div>
       </div>
-      <!-- fog effect (css only) -->
+      <!-- Enhanced fog effect (css only) -->
       <div class="fog-container">
         <div class="fog fog1"></div>
         <div class="fog fog2"></div>
+        <div class="fog fog3"></div>
+      </div>
+      <!-- Light rays -->
+      <div class="light-rays"></div>
+    </section>
+
+    <!-- VIDEO SECTION -->
+    <section id="video" class="video-section section-pad">
+      <div class="container">
+        <h2 class="section-title center">Experience the Legend</h2>
+        <div class="title-underline center"></div>
+        <div class="video-wrapper animate-on-scroll" data-anim="scale-in">
+          <div class="video-placeholder">
+            <div class="play-button">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="video-glow"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -80,6 +155,7 @@
               <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1624009396808-1f1b5f3e3b3a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');">
                 <span class="img-caption">Torna fort today – view from Zunjar Machi</span>
               </div>
+              <div class="image-glow"></div>
             </div>
           </div>
           <div class="about-text animate-on-scroll" data-anim="fade-left">
@@ -90,10 +166,11 @@
             <p><strong>⚔️ Captured by Chhatrapati Shivaji Maharaj in 1646</strong> when he was only 16 years old. This was his first conquest and the foundation of the Maratha Empire. The treasure found here – gold coins, silver, and precious stones – helped him build a strong army and later construct Rajgad.</p>
             <p><strong>📜 Simple words:</strong> Torna is like the first brick of Swarajya. Before this, Shivaji Maharaj was a young leader; after winning Torna, everyone knew he was born to rule. The fort has two main peaks – Zunjar Machi and Budhla Machi – and many water tanks cut into rock.</p>
             <div class="fort-stats">
-              <div><span>13th C</span> Origin</div>
-              <div><span>1646</span> First victory</div>
-              <div><span>★</span> Swarajya</div>
+              <div class="stat-item" data-value="13"><span>13th C</span> Origin</div>
+              <div class="stat-item" data-value="1646"><span>1646</span> First victory</div>
+              <div class="stat-item" data-value="1"><span>★</span> Swarajya</div>
             </div>
+            <div class="stat-particles" id="statParticles"></div>
           </div>
         </div>
       </div>
@@ -108,29 +185,50 @@
           <div class="timeline-item animate-on-scroll" data-anim="fade-up">
             <div class="timeline-dot"></div>
             <div class="timeline-date">~1200 CE</div>
-            <div class="timeline-content">Silhara dynasty builds Prachandagad to control trade routes between the coast and the Deccan plateau.</div>
+            <div class="timeline-content">
+              <div class="timeline-icon"><i class="fas fa-castle"></i></div>
+              <h3>Silhara dynasty builds Prachandagad</h3>
+              <p>To control trade routes between the coast and the Deccan plateau.</p>
+            </div>
           </div>
           <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="200">
             <div class="timeline-dot"></div>
             <div class="timeline-date">1646</div>
-            <div class="timeline-content">Shivaji Maharaj captures Torna from the Adilshahi of Bijapur. Treasure found: ~20 lakh hons (gold coins).</div>
+            <div class="timeline-content">
+              <div class="timeline-icon"><i class="fas fa-crown"></i></div>
+              <h3>Shivaji Maharaj captures Torna</h3>
+              <p>Treasure found: ~20 lakh hons (gold coins). First step to Swarajya.</p>
+            </div>
           </div>
           <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="400">
             <div class="timeline-dot"></div>
             <div class="timeline-date">1657</div>
-            <div class="timeline-content">Mughal general Shaista Khan attempts to seize the fort but fails due to strong Maratha defence.</div>
+            <div class="timeline-content">
+              <div class="timeline-icon"><i class="fas fa-shield-alt"></i></div>
+              <h3>Mughal siege fails</h3>
+              <p>General Shaista Khan attempts to seize the fort but fails due to strong Maratha defence.</p>
+            </div>
           </div>
           <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="600">
             <div class="timeline-dot"></div>
             <div class="timeline-date">1670s</div>
-            <div class="timeline-content">Shivaji Maharaj strengthens Torna's fortifications; it becomes a key outpost.</div>
+            <div class="timeline-content">
+              <div class="timeline-icon"><i class="fas fa-fort-awesome"></i></div>
+              <h3>Fortifications strengthened</h3>
+              <p>Shivaji Maharaj strengthens Torna's fortifications; it becomes a key outpost.</p>
+            </div>
           </div>
           <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="800">
             <div class="timeline-dot"></div>
             <div class="timeline-date">1818</div>
-            <div class="timeline-content">British East India Company takes control after the Third Anglo-Maratha War. Later used as a prison.</div>
+            <div class="timeline-content">
+              <div class="timeline-icon"><i class="fas fa-flag"></i></div>
+              <h3>British rule begins</h3>
+              <p>East India Company takes control after Third Anglo-Maratha War. Later used as prison.</p>
+            </div>
           </div>
         </div>
+        <div class="timeline-line-glow"></div>
       </div>
     </section>
 
@@ -143,9 +241,12 @@
           <div class="flip-card animate-on-scroll" data-anim="zoom-in">
             <div class="flip-inner">
               <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <div class="flip-icon"><i class="fas fa-mountain"></i></div>
                 <h3>Zunjar Machi</h3>
+                <div class="flip-glow"></div>
               </div>
               <div class="flip-back">
+                <div class="flip-back-icon"><i class="fas fa-mountain"></i></div>
                 <p><strong>Zunjar Machi</strong> – the largest plateau. It has two small temples and offers a 360° view. It was used to keep cattle and as a camping ground for soldiers.</p>
               </div>
             </div>
@@ -153,9 +254,12 @@
           <div class="flip-card animate-on-scroll" data-anim="zoom-in" data-delay="150">
             <div class="flip-inner">
               <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <div class="flip-icon"><i class="fas fa-archway"></i></div>
                 <h3>Budhla Machi</h3>
+                <div class="flip-glow"></div>
               </div>
               <div class="flip-back">
+                <div class="flip-back-icon"><i class="fas fa-archway"></i></div>
                 <p><strong>Budhla Machi</strong> – named after 'Budhla' (old man). It has a large cave and a water cistern that never dries. Ruins of an ancient temple are also here.</p>
               </div>
             </div>
@@ -163,9 +267,12 @@
           <div class="flip-card animate-on-scroll" data-anim="zoom-in" data-delay="300">
             <div class="flip-inner">
               <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <div class="flip-icon"><i class="fas fa-door-open"></i></div>
                 <h3>Torana gateways</h3>
+                <div class="flip-glow"></div>
               </div>
               <div class="flip-back">
+                <div class="flip-back-icon"><i class="fas fa-door-open"></i></div>
                 <p><strong>Massive stone gates</strong> – the main entrance has a clever design with sharp turns to slow down enemy elephants and cavalry.</p>
               </div>
             </div>
@@ -173,9 +280,12 @@
           <div class="flip-card animate-on-scroll" data-anim="zoom-in" data-delay="450">
             <div class="flip-inner">
               <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <div class="flip-icon"><i class="fas fa-tint"></i></div>
                 <h3>Water reservoirs</h3>
+                <div class="flip-glow"></div>
               </div>
               <div class="flip-back">
+                <div class="flip-back-icon"><i class="fas fa-tint"></i></div>
                 <p><strong>More than 20 rock-cut cisterns</strong> – some still hold water. The engineering ensured year-round supply for the garrison.</p>
               </div>
             </div>
@@ -183,6 +293,7 @@
         </div>
         <!-- Additional architectural note -->
         <p class="arch-note animate-on-scroll" data-anim="fade-up">The fort also has several caves, probably used by monks or as storage. The walls are built with huge interlocking stones – no mortar – a hallmark of ancient Indian hill forts.</p>
+        <div class="arch-particles" id="archParticles"></div>
       </div>
     </section>
 
@@ -195,16 +306,16 @@
           <p class="importance-quote">"The first victory that ignited the flame of Swarajya."</p>
           <p><strong>Why was Torna so important?</strong> In simple words – it gave Shivaji Maharaj his first big success and the money to build a kingdom. The treasure from Torna helped:</p>
           <ul class="importance-list">
-            <li>Build a strong army of loyal soldiers.</li>
-            <li>Construct and repair other forts like Rajgad.</li>
-            <li>Show the world that the Marathas could challenge big powers like the Adilshahi and Mughals.</li>
+            <li><span class="list-icon"><i class="fas fa-shield-alt"></i></span>Build a strong army of loyal soldiers.</li>
+            <li><span class="list-icon"><i class="fas fa-fort-awesome"></i></span>Construct and repair other forts like Rajgad.</li>
+            <li><span class="list-icon"><i class="fas fa-flag"></i></span>Show the world that the Marathas could challenge big powers like the Adilshahi and Mughals.</li>
           </ul>
           <p>After Torna, many other forts were captured, and the Maratha flag flew high. Even today, Torna is a symbol of courage and the beginning of an empire.</p>
           <div class="gold-divider"></div>
         </div>
       </div>
       <!-- particle background (css only) -->
-      <div class="particles"></div>
+      <div class="particles" id="importanceParticles"></div>
     </section>
 
     <!-- 6. TEAM SHIVADURGA -->
@@ -220,6 +331,7 @@
           <p class="team-number">Team No. 9</p>
           <p class="team-mission">Forging digital heritage with the spirit of the Maratha warrior. We build immersive experiences that echo through time. Our team combines history, technology, and design to bring Torna Fort to life.</p>
           <div class="team-glow-border"></div>
+          <div class="team-particles" id="teamParticles"></div>
         </div>
       </div>
     </section>
@@ -230,31 +342,102 @@
         <h2 class="section-title center">Contributors</h2>
         <div class="title-underline center"></div>
         <div class="contrib-grid">
+
+
           <div class="contrib-card animate-on-scroll" data-anim="fade-up">
             <div class="contrib-img" style="background-color: #b87333;"><span>AP</span></div>
-            <h4>Aditya Pawar</h4>
-            <p>Designer / Historian</p>
+            <h4>Prasanna Dambalkar</h4>
+            <!-- <p>Designer / Historian</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
           </div>
+
+
+
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up">
+            <div class="contrib-img" style="background-color: #b87333;"><span>AP</span></div>
+            <h4>Prachi Bute</h4>
+            <p>impact player</p>
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
+          </div>
+
+
+
           <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="150">
             <div class="contrib-img" style="background-color: #8b5a2b;"><span>RJ</span></div>
-            <h4>Rohan Jadhav</h4>
-            <p>Researcher / Writer</p>
+            <h4>Shreyash Magar</h4>
+            <!-- <p>Researcher / Writer</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
           </div>
+
+
+
           <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="300">
             <div class="contrib-img" style="background-color: #a0522d;"><span>SK</span></div>
-            <h4>Sneha Khot</h4>
-            <p>3D Modeler</p>
+            <h4>Yash Shinde</h4>
+            <!-- <p>3D Modeler</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
           </div>
+
+
           <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="450">
             <div class="contrib-img" style="background-color: #c19a6b;"><span>VM</span></div>
-            <h4>Vikram More</h4>
-            <p>Developer / Animator</p>
+            <h4>Sanish Dalvi</h4>
+            <!-- <p>Developer / Animator</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
           </div>
+
+
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="450">
+            <div class="contrib-img" style="background-color: #c19a6b;"><span>VM</span></div>
+            <h4>Amruta Thakare</h4>
+            <!-- <p>Developer / Animator</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
+          </div>
+
+
+
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="450">
+            <div class="contrib-img" style="background-color: #c19a6b;"><span>VM</span></div>
+            <h4>Parth Savdekar</h4>
+            <!-- <p>Developer / Animator</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
+          </div>
+
+
+
           <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="600">
             <div class="contrib-img" style="background-color: #9c7a4d;"><span>SN</span></div>
-            <h4>Sanika Nalawade</h4>
-            <p>Content / Photography</p>
+            <h4>Krushna Belhekar</h4>
+            <!-- <p>Content / Photography</p> -->
+            <!-- <div class="contrib-social">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div> -->
           </div>
+
+
+
         </div>
       </div>
     </section>
@@ -266,12 +449,30 @@
         <div class="title-underline center"></div>
         <div class="gallery-grid" id="galleryGrid">
           <!-- replace image URLs with your own; width & height hints via unsplash IDs -->
-          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1589792923971-f7d4c1f6a7b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1589792923971-f7d4c1f6a7b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Zunjar Machi bastion</span> </div>
-          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1599577232023-5b3a9f7d2b3d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1599577232023-5b3a9f7d2b3d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Budhla Machi plateau</span> </div>
-          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1611843467162-5e9d5e3f5f5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1611843467162-5e9d5e3f5f5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Main entrance gate</span> </div>
-          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1601810499436-9c0d3a5f5b5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1601810499436-9c0d3a5f5b5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Ancient water cistern</span> </div>
-          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1626621341518-4c8b5e4b6b1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1626621341518-4c8b5e4b6b1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Sunset from Torna</span> </div>
-          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1563291074-2c9b9c3b5b5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1563291074-2c9b9c3b5b5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Stone carvings</span> </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1589792923971-f7d4c1f6a7b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1589792923971-f7d4c1f6a7b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> 
+            <span>Zunjar Machi bastion</span>
+            <div class="gallery-overlay"></div>
+          </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1599577232023-5b3a9f7d2b3d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1599577232023-5b3a9f7d2b3d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> 
+            <span>Budhla Machi plateau</span>
+            <div class="gallery-overlay"></div>
+          </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1611843467162-5e9d5e3f5f5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1611843467162-5e9d5e3f5f5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> 
+            <span>Main entrance gate</span>
+            <div class="gallery-overlay"></div>
+          </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1601810499436-9c0d3a5f5b5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1601810499436-9c0d3a5f5b5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> 
+            <span>Ancient water cistern</span>
+            <div class="gallery-overlay"></div>
+          </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1626621341518-4c8b5e4b6b1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1626621341518-4c8b5e4b6b1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> 
+            <span>Sunset from Torna</span>
+            <div class="gallery-overlay"></div>
+          </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1563291074-2c9b9c3b5b5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1563291074-2c9b9c3b5b5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> 
+            <span>Stone carvings</span>
+            <div class="gallery-overlay"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -292,6 +493,7 @@
             <div class="animated-qr">
               <i class="fas fa-qrcode"></i>
             </div>
+            <div class="qr-particles" id="qrParticles"></div>
             <div class="arrow-animated"><i class="fas fa-arrow-down"></i></div>
           </div>
           <div class="qr-text">

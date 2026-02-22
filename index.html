@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torna Fort | Shivadurga – The First Victory</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- PRELOADER (cinematic intro) -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="war-drum"><i class="fas fa-drum"></i></div>
+      <h1 class="preloader-title">शिवदुर्ग</h1>
+      <p class="preloader-sub">Team 9 · Torna Fort</p>
+      <div class="preloader-line"></div>
+    </div>
+  </div>
+
+  <!-- NAVBAR (fixed, responsive) -->
+  <header id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="#hero">शिवदुर्ग · ९</a>
+      </div>
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li><a href="#about">इतिहास</a></li>
+          <li><a href="#timeline">कालरेषा</a></li>
+          <li><a href="#architecture">बांधकाम</a></li>
+          <li><a href="#importance">महत्त्व</a></li>
+          <li><a href="#team">टीम</a></li>
+          <li><a href="#gallery">चित्रदालन</a></li>
+          <li><a href="#qr">QR</a></li>
+        </ul>
+      </nav>
+      <div class="nav-toggle" id="nav-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WEBSITE -->
+  <main id="fullpage">
+    <!-- 1. CINEMATIC HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-saffron-line"></div>
+          <h1 class="hero-title animate-fadein">TORNA FORT</h1>
+          <h2 class="hero-subtitle">Prachandagad – The Pride of the Maratha Empire</h2>
+          <div class="hero-team">Shivadurga | Team No. 9</div>
+          <a href="#about" class="hero-btn">Enter the fortress <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <br><br>
+        <div class="scroll-down">
+          <a href="#about"><i class="fas fa-chevron-down"></i></a>
+        </div>
+      </div>
+      <!-- fog effect (css only) -->
+      <div class="fog-container">
+        <div class="fog fog1"></div>
+        <div class="fog fog2"></div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT TORNA FORT (more historical details) -->
+    <section id="about" class="about-section section-pad">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-image animate-on-scroll" data-anim="fade-right">
+            <div class="image-frame parchment">
+              <!-- REPLACE image link below with your own -->
+              <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1624009396808-1f1b5f3e3b3a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');">
+                <span class="img-caption">Torna fort today – view from Zunjar Machi</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-text animate-on-scroll" data-anim="fade-left">
+            <h2 class="section-title">The ancient citadel</h2>
+            <div class="title-underline"></div>
+            <p><strong>📍 Location:</strong> Sahyadri mountains, near Pune, Maharashtra. <br> <strong>⛰️ Elevation:</strong> 1,403 m (4,603 ft) – highest fort in Pune district.</p>
+            <p><strong>🏰 Built:</strong> 13th century by the Silhara dynasty. Originally called 'Prachandagad' which means 'massive fort'.</p>
+            <p><strong>⚔️ Captured by Chhatrapati Shivaji Maharaj in 1646</strong> when he was only 16 years old. This was his first conquest and the foundation of the Maratha Empire. The treasure found here – gold coins, silver, and precious stones – helped him build a strong army and later construct Rajgad.</p>
+            <p><strong>📜 Simple words:</strong> Torna is like the first brick of Swarajya. Before this, Shivaji Maharaj was a young leader; after winning Torna, everyone knew he was born to rule. The fort has two main peaks – Zunjar Machi and Budhla Machi – and many water tanks cut into rock.</p>
+            <div class="fort-stats">
+              <div><span>13th C</span> Origin</div>
+              <div><span>1646</span> First victory</div>
+              <div><span>★</span> Swarajya</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. HISTORICAL TIMELINE (more events) -->
+    <section id="timeline" class="timeline-section section-pad">
+      <div class="container">
+        <h2 class="section-title center">Timeline of glory</h2>
+        <div class="title-underline center"></div>
+        <div class="timeline">
+          <div class="timeline-item animate-on-scroll" data-anim="fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">~1200 CE</div>
+            <div class="timeline-content">Silhara dynasty builds Prachandagad to control trade routes between the coast and the Deccan plateau.</div>
+          </div>
+          <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="200">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">1646</div>
+            <div class="timeline-content">Shivaji Maharaj captures Torna from the Adilshahi of Bijapur. Treasure found: ~20 lakh hons (gold coins).</div>
+          </div>
+          <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="400">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">1657</div>
+            <div class="timeline-content">Mughal general Shaista Khan attempts to seize the fort but fails due to strong Maratha defence.</div>
+          </div>
+          <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="600">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">1670s</div>
+            <div class="timeline-content">Shivaji Maharaj strengthens Torna's fortifications; it becomes a key outpost.</div>
+          </div>
+          <div class="timeline-item animate-on-scroll" data-anim="fade-up" data-delay="800">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">1818</div>
+            <div class="timeline-content">British East India Company takes control after the Third Anglo-Maratha War. Later used as a prison.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ARCHITECTURE & FEATURES (more info) -->
+    <section id="architecture" class="arch-section section-pad">
+      <div class="container">
+        <h2 class="section-title center">Architecture & features</h2>
+        <div class="title-underline center"></div>
+        <div class="arch-grid">
+          <div class="flip-card animate-on-scroll" data-anim="zoom-in">
+            <div class="flip-inner">
+              <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <h3>Zunjar Machi</h3>
+              </div>
+              <div class="flip-back">
+                <p><strong>Zunjar Machi</strong> – the largest plateau. It has two small temples and offers a 360° view. It was used to keep cattle and as a camping ground for soldiers.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-card animate-on-scroll" data-anim="zoom-in" data-delay="150">
+            <div class="flip-inner">
+              <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <h3>Budhla Machi</h3>
+              </div>
+              <div class="flip-back">
+                <p><strong>Budhla Machi</strong> – named after 'Budhla' (old man). It has a large cave and a water cistern that never dries. Ruins of an ancient temple are also here.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-card animate-on-scroll" data-anim="zoom-in" data-delay="300">
+            <div class="flip-inner">
+              <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <h3>Torana gateways</h3>
+              </div>
+              <div class="flip-back">
+                <p><strong>Massive stone gates</strong> – the main entrance has a clever design with sharp turns to slow down enemy elephants and cavalry.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-card animate-on-scroll" data-anim="zoom-in" data-delay="450">
+            <div class="flip-inner">
+              <div class="flip-front" style="background-image: linear-gradient(45deg, #5a3e2b, #2f1e12);">
+                <h3>Water reservoirs</h3>
+              </div>
+              <div class="flip-back">
+                <p><strong>More than 20 rock-cut cisterns</strong> – some still hold water. The engineering ensured year-round supply for the garrison.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Additional architectural note -->
+        <p class="arch-note animate-on-scroll" data-anim="fade-up">The fort also has several caves, probably used by monks or as storage. The walls are built with huge interlocking stones – no mortar – a hallmark of ancient Indian hill forts.</p>
+      </div>
+    </section>
+
+    <!-- 5. IMPORTANCE IN MARATHA EMPIRE (expanded) -->
+    <section id="importance" class="importance-section section-pad">
+      <div class="container">
+        <div class="importance-content animate-on-scroll" data-anim="fade-up">
+          <h2 class="section-title">Key to the Maratha Empire</h2>
+          <div class="title-underline"></div>
+          <p class="importance-quote">"The first victory that ignited the flame of Swarajya."</p>
+          <p><strong>Why was Torna so important?</strong> In simple words – it gave Shivaji Maharaj his first big success and the money to build a kingdom. The treasure from Torna helped:</p>
+          <ul class="importance-list">
+            <li>Build a strong army of loyal soldiers.</li>
+            <li>Construct and repair other forts like Rajgad.</li>
+            <li>Show the world that the Marathas could challenge big powers like the Adilshahi and Mughals.</li>
+          </ul>
+          <p>After Torna, many other forts were captured, and the Maratha flag flew high. Even today, Torna is a symbol of courage and the beginning of an empire.</p>
+          <div class="gold-divider"></div>
+        </div>
+      </div>
+      <!-- particle background (css only) -->
+      <div class="particles"></div>
+    </section>
+
+    <!-- 6. TEAM SHIVADURGA -->
+    <section id="team" class="team-section section-pad">
+      <div class="container">
+        <h2 class="section-title center">Team Shivadurga</h2>
+        <div class="title-underline center"></div>
+        <div class="team-card animate-on-scroll" data-anim="flip-up">
+          <div class="team-logo">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>शिवदुर्ग</h3>
+          <p class="team-number">Team No. 9</p>
+          <p class="team-mission">Forging digital heritage with the spirit of the Maratha warrior. We build immersive experiences that echo through time. Our team combines history, technology, and design to bring Torna Fort to life.</p>
+          <div class="team-glow-border"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CONTRIBUTORS PAGE (cards) -->
+    <section id="contributors" class="contributors-section section-pad">
+      <div class="container">
+        <h2 class="section-title center">Contributors</h2>
+        <div class="title-underline center"></div>
+        <div class="contrib-grid">
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up">
+            <div class="contrib-img" style="background-color: #b87333;"><span>AP</span></div>
+            <h4>Aditya Pawar</h4>
+            <p>Designer / Historian</p>
+          </div>
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="150">
+            <div class="contrib-img" style="background-color: #8b5a2b;"><span>RJ</span></div>
+            <h4>Rohan Jadhav</h4>
+            <p>Researcher / Writer</p>
+          </div>
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="300">
+            <div class="contrib-img" style="background-color: #a0522d;"><span>SK</span></div>
+            <h4>Sneha Khot</h4>
+            <p>3D Modeler</p>
+          </div>
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="450">
+            <div class="contrib-img" style="background-color: #c19a6b;"><span>VM</span></div>
+            <h4>Vikram More</h4>
+            <p>Developer / Animator</p>
+          </div>
+          <div class="contrib-card animate-on-scroll" data-anim="fade-up" data-delay="600">
+            <div class="contrib-img" style="background-color: #9c7a4d;"><span>SN</span></div>
+            <h4>Sanika Nalawade</h4>
+            <p>Content / Photography</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. GALLERY SECTION (masonry style grid + lightbox) -->
+    <section id="gallery" class="gallery-section section-pad">
+      <div class="container">
+        <h2 class="section-title center">Fort gallery</h2>
+        <div class="title-underline center"></div>
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- replace image URLs with your own; width & height hints via unsplash IDs -->
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1589792923971-f7d4c1f6a7b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1589792923971-f7d4c1f6a7b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Zunjar Machi bastion</span> </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1599577232023-5b3a9f7d2b3d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1599577232023-5b3a9f7d2b3d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Budhla Machi plateau</span> </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1611843467162-5e9d5e3f5f5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1611843467162-5e9d5e3f5f5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Main entrance gate</span> </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1601810499436-9c0d3a5f5b5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1601810499436-9c0d3a5f5b5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Ancient water cistern</span> </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1626621341518-4c8b5e4b6b1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1626621341518-4c8b5e4b6b1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Sunset from Torna</span> </div>
+          <div class="gallery-item animate-on-scroll" data-anim="zoom-in" data-src="https://images.unsplash.com/photo-1563291074-2c9b9c3b5b5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" style="background-image: url('https://images.unsplash.com/photo-1563291074-2c9b9c3b5b5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80');"> <span>Stone carvings</span> </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIGHTBOX MODAL (hidden by default) -->
+    <div id="lightbox" class="lightbox">
+      <span class="close">&times;</span>
+      <span class="prev"><i class="fas fa-chevron-left"></i></span>
+      <span class="next"><i class="fas fa-chevron-right"></i></span>
+      <img class="lightbox-content" id="lightbox-img" src="" alt="Fort view">
+    </div>
+
+    <!-- 9. QR INSTRUCTION SECTION -->
+    <section id="qr" class="qr-section section-pad">
+      <div class="container">
+        <div class="qr-card animate-on-scroll" data-anim="fade-up">
+          <div class="qr-code-placeholder">
+            <div class="animated-qr">
+              <i class="fas fa-qrcode"></i>
+            </div>
+            <div class="arrow-animated"><i class="fas fa-arrow-down"></i></div>
+          </div>
+          <div class="qr-text">
+            <h3>Scan the QR near Torna</h3>
+            <p>Walk the path of history. This digital gateway brings the fort's legend to your fingertips. Scan the code placed near the fort entrance to experience immersive audio-visual stories, 3D models, and historical reenactments.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">शिवदुर्ग · Team 9</div>
+          <div class="footer-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+          <div class="footer-credit">Designed by Team 9 | Heritage Competition | All rights reserved</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- sound-ready placeholder (hidden) -->
+<!-- Background music (hidden) -->
+<audio id="war-drum-sound" preload="auto" loop style="display: none;">
+  <source src="bg.mp3" type="audio/mpeg">
+  Your browser does not support audio.
+</audio>
+
+<!-- Floating audio control button -->
+<div id="audio-control" class="audio-control" title="Background music">
+  <i class="fas fa-volume-up" id="audio-icon"></i>
+</div>
+  <script src="script.js"></script>
+</body>
+</html>

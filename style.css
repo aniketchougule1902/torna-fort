@@ -1513,12 +1513,12 @@ h1, h2, h3 {
   justify-content: center;
 }
 
-/* ===== QR SECTION ===== */
-.qr-section {
+/* ===== VOTE SECTION ===== */
+.vote-section {
   background: linear-gradient(180deg, #0d0a06 0%, var(--dark-brown) 100%);
 }
 
-.qr-card {
+.vote-card {
   display: flex;
   align-items: center;
   gap: 4rem;
@@ -1532,7 +1532,7 @@ h1, h2, h3 {
   overflow: hidden;
 }
 
-.qr-card::before {
+.vote-card::before {
   content: '';
   position: absolute;
   top: -50%;
@@ -1540,65 +1540,59 @@ h1, h2, h3 {
   width: 200%;
   height: 200%;
   background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-  animation: qrRotate 10s linear infinite;
+  animation: voteRotate 10s linear infinite;
 }
 
-@keyframes qrRotate {
+@keyframes voteRotate {
   to { transform: rotate(360deg); }
 }
 
-.qr-code-placeholder {
+.vote-image {
   flex-shrink: 0;
-  width: 250px;
-  height: 250px;
-  background: linear-gradient(135deg, #fff, #f0e6d3);
+  width: 300px;
+  height: auto;
   border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-}
-
-.animated-qr i {
-  font-size: 8rem;
-  color: #1a1410;
-}
-
-.arrow-animated {
-  margin-top: 1rem;
-  color: var(--gold);
-  font-size: 1.5rem;
-  animation: arrowBounce 1.5s infinite;
-}
-
-@keyframes arrowBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
-}
-
-.qr-text {
   position: relative;
   z-index: 2;
 }
 
-.qr-text h3 {
+.vote-text {
+  position: relative;
+  z-index: 2;
+}
+
+.vote-text h3 {
   font-size: 2rem;
   color: var(--saffron);
   margin-bottom: 1rem;
 }
 
-.qr-text p {
+.vote-text p {
   font-size: 1.1rem;
   color: var(--text-light);
   line-height: 1.8;
 }
 
 @media (max-width: 768px) {
-  .qr-card {
+  .vote-card {
     flex-direction: column;
     text-align: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .vote-image {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .vote-text h3 {
+    font-size: 1.5rem;
+  }
+  
+  .vote-text p {
+    font-size: 1rem;
   }
 }
 
@@ -2115,25 +2109,16 @@ h1, h2, h3 {
     line-height: 1.6;
   }
   
-  .qr-card {
+  .vote-card {
     padding: 2rem 1.5rem;
     gap: 2rem;
   }
   
-  .qr-code-placeholder {
-    width: 180px;
-    height: 180px;
-  }
-  
-  .animated-qr i {
-    font-size: 5rem;
-  }
-  
-  .qr-text h3 {
+  .vote-text h3 {
     font-size: 1.5rem;
   }
   
-  .qr-text p {
+  .vote-text p {
     font-size: 1rem;
   }
   
@@ -2189,15 +2174,6 @@ h1, h2, h3 {
   
   .team-card h3 {
     font-size: 1.5rem;
-  }
-  
-  .qr-code-placeholder {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .animated-qr i {
-    font-size: 4rem;
   }
 }
 

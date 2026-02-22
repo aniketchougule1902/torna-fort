@@ -406,18 +406,19 @@ galleryItems.forEach((item, index) => {
     imageSources.push(url);
   }
   
+  // Lightbox disabled - click events removed
   // Click/touch event
-  item.addEventListener('click', () => {
-    currentIndex = index;
-    openLightbox(imageSources[currentIndex]);
-  });
+  // item.addEventListener('click', () => {
+  //   currentIndex = index;
+  //   openLightbox(imageSources[currentIndex]);
+  // });
   
   // Touch support for mobile
-  item.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    currentIndex = index;
-    openLightbox(imageSources[currentIndex]);
-  });
+  // item.addEventListener('touchend', (e) => {
+  //   e.preventDefault();
+  //   currentIndex = index;
+  //   openLightbox(imageSources[currentIndex]);
+  // });
 });
 
 function openLightbox(src) {

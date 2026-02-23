@@ -782,3 +782,25 @@ if (prefersReducedMotion.matches) {
   // Add smooth scroll behavior
   document.documentElement.style.scrollBehavior = 'smooth';
 }
+
+
+
+
+
+// Load Google Analytics gtag.js dynamically
+(function () {
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=G-01J1XBNRF1";
+  document.head.appendChild(script);
+})();
+
+// Initialize dataLayer and gtag function
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+
+// Initialize Google Analytics
+gtag("js", new Date());
+gtag("config", "G-01J1XBNRF1");

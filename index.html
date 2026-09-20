@@ -53,6 +53,10 @@
   </style>
 </head>
 <body>
+  <div class="site-grain" aria-hidden="true"></div>
+  <div class="scroll-progress-shell" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+  <div class="heritage-mark" aria-hidden="true">⟡</div>
+  <div class="floating-crest" aria-hidden="true">॥</div>
   <!-- GLOWING ORBS BACKGROUND -->
   <div class="glow-orb" style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,179,71,0.3) 0%, transparent 70%); top: 10%; left: 5%; animation-delay: 0s;"></div>
   <div class="glow-orb" style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(161,61,47,0.3) 0%, transparent 70%); top: 60%; right: 10%; animation-delay: -7s;"></div>
@@ -102,6 +106,9 @@
 
   <!-- MAIN WEBSITE -->
   <main id="fullpage">
+    <div class="chapter-rail" aria-hidden="true">
+      <span class="chapter-active"></span><span></span><span></span><span></span><span></span>
+    </div>
     <!-- 1. CINEMATIC HERO SECTION -->
     <section id="hero" class="hero-section">
       <div class="hero-overlay"></div>
@@ -589,6 +596,10 @@
   <i class="fas fa-volume-up" id="audio-icon"></i>
 </div>
   <script src="script.js"></script>
+<div class="cinematic-toast" id="cinematicToast" role="status" aria-live="polite"></div>
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
 </body>
 </html>
 

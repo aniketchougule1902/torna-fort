@@ -804,3 +804,88 @@ function gtag() {
 // Initialize Google Analytics
 gtag("js", new Date());
 gtag("config", "G-01J1XBNRF1");
+
+
+/* ===== TORNA MOTION CONTROLLER v2 ===== */
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const progress = document.getElementById('scroll-progress-bar');
+  const toast = document.getElementById('cinematicToast');
+  const railDots = [...document.querySelectorAll('.chapter-rail span')];
+  const sections = [...document.querySelectorAll('main section[id]')];
+  let raf = 0;
+
+  const setProgress = () => {
+    raf = 0;
+    if (!progress) return;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  };
+  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(setProgress); }, {passive:true});
+  setProgress();
+
+  const updateRail = () => {
+    if (!railDots.length) return;
+    const mark = window.scrollY + window.innerHeight * 0.45;
+    let active = 0;
+    sections.forEach((s,i) => { if (s.offsetTop <= mark) active = Math.min(i, railDots.length - 1); });
+    railDots.forEach((d,i)=>d.classList.toggle('chapter-active', i===active));
+  };
+  window.addEventListener('scroll', updateRail, {passive:true});
+  updateRail();
+
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.animate-on-scroll').forEach(el=>reveal.observe(el));
+
+  if (!reduced) {
+    const layers = document.querySelectorAll('.hero-section .hero-content, .hero-section .fog, .hero-section .light-rays');
+    const move = () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight * 1.25) {
+        layers.forEach((el,i)=>{ if(el) el.style.transform = 'translate3d(0,' + (y * (0.035 + i*0.018)) + 'px,0)'; });
+      }
+    };
+    window.addEventListener('scroll', move, {passive:true});
+  }
+
+  document.querySelectorAll('.hero-btn, .contrib-card, .flip-card, .gallery-item').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      if (reduced || e.pointerType === 'touch') return;
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5;
+      const y = (e.clientY - r.top) / r.height - .5;
+      el.style.setProperty('--mx', (x*18)+'px');
+      el.style.setProperty('--my', (y*12)+'px');
+      if (el.classList.contains('gallery-item')) el.style.transform = 'perspective(900px) rotateX('+(y*-2)+'deg) rotateY('+(x*3)+'deg) translateY(-6px)';
+    });
+    el.addEventListener('pointerleave', () => {
+      el.style.removeProperty('--mx'); el.style.removeProperty('--my');
+      if (el.classList.contains('gallery-item')) el.style.transform = '';
+    });
+  });
+
+  const audio = document.getElementById('war-drum-sound');
+  if (audio && toast) {
+    audio.addEventListener('play',()=>{toast.textContent='पार्श्वसंगीत सुरू';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1400)});
+  }
+
+  // Re-enable gallery lightbox clicks; the original version had the click handlers commented out.
+  const items = [...document.querySelectorAll('.gallery-item')];
+  const box = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const close = box?.querySelector('.close');
+  const prev = box?.querySelector('.prev');
+  const next = box?.querySelector('.next');
+  let current = 0;
+  const sources = items.map(item => item.dataset.src || item.style.backgroundImage.replace(/^url\((['"]?)(.*)\1\)$/,'$2'));
+  const show = i => { current=(i+sources.length)%sources.length; if(img){img.src=sources[current];} box?.classList.add('active'); document.body.style.overflow='hidden'; };
+  items.forEach((item,i)=>item.addEventListener('click',()=>show(i)));
+  close?.addEventListener('click',()=>{box.classList.remove('active');document.body.style.overflow='';});
+  prev?.addEventListener('click',()=>show(current-1));
+  next?.addEventListener('click',()=>show(current+1));
+  document.addEventListener('keydown',e=>{if(!box?.classList.contains('active'))return;if(e.key==='Escape')close?.click();if(e.key==='ArrowLeft')prev?.click();if(e.key==='ArrowRight')next?.click();});
+})();
